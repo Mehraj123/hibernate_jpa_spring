@@ -28,10 +28,10 @@ public class HibernateCoreUtils {
     @Bean
     public DataSource dataSource() {
         return DataSourceBuilder.create()
-                .driverClassName("com.mysql.cj.jdbc.Driver")\=
-                .url("jdbc:mysql://localhost:6033dsdsdsda;alllk///';[[;/hibernate-jpa-spring")
+                .driverClassName("com.mysql.cj.jdbc.Driver")
+                .url("jdbc:mysql://localhost:3066/hibernate-jpa-spring")
                 .username("root")
-                .password("roowdsdnjsnfct")
+                .password("root")
                 .build();
     }
 
@@ -44,7 +44,7 @@ public class HibernateCoreUtils {
 
     private Properties hibernateConfiguration() {
         Properties hibernateConfig = new Properties();
-        hibernateConfig.put("dialect","org.hibernate.dialect.MySql5InnoDBDialect");
+        hibernateConfig.put("hibernate.dialect","org.hibernate.dialect.MySQL5InnoDBDialect");
         hibernateConfig.put("hibernate.hbm2ddl.auto","create");
         hibernateConfig.put("hibernate.show_sql","true");
         hibernateConfig.put("hibernate.format_sql","true");
