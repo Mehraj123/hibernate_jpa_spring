@@ -19,9 +19,8 @@ public class PersonDaoImpl implements PersonDao {
 
     @Override
     public Person save(Person person) {
-        Session session = sessionFactory.getCurrentSession();
         Person savedPerson;
-        try {
+        try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             Long personId = (Long) session.save(person);
             session.getTransaction().commit();
@@ -42,8 +41,7 @@ public class PersonDaoImpl implements PersonDao {
     @Override
     public Person findById(Long personId) {
         Person person;
-        try {
-            Session session = sessionFactory.getCurrentSession();
+        try (Session session = sessionFactory.openSession()) {
             person = session.find(Person.class, personId);
             if (person == null) {
                 log.info("Person not found by id {} ", personId);
@@ -60,10 +58,9 @@ public class PersonDaoImpl implements PersonDao {
 
     @Override
     public Person update(PersonDto personDto) {
-        try {
+        try (Session session = sessionFactory.openSession()) {
             Person personById = findById(personDto.getId());
             Person person = updatePerson(personById, personDto);
-            Session session = sessionFactory.getCurrentSession();
             session.beginTransaction();
             Person updatedPerson = (Person) session.merge(person);
             session.getTransaction().commit();
@@ -79,13 +76,18 @@ public class PersonDaoImpl implements PersonDao {
 
     @Override
     public Long delete(Long personId) {
-        Person person = findById(personId);
-        Session session = sessionFactory.getCurrentSession();
-        session.beginTransaction();
-        session.delete(person);
-        session.getTransaction().commit();
-        log.info("Person deleted with id {}", personId);
-        return personId;
+        try (Session session = sessionFactory.openSession()) {
+            Person person = findById(personId);
+            session.beginTransaction();
+            session.delete(person);
+            session.getTransaction().commit();
+            log.info("Person deleted with id {}", personId);
+            return personId;
+        } catch (Exception exception) {
+            log.info("Exception occurred while deleting person by Id {} : {} ", personId, exception.getMessage());
+            throw new BaseException(ErrorCode.SERVER_FAILED);
+        }
+
     }
 
 
