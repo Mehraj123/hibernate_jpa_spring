@@ -1,6 +1,6 @@
-package com.demo.hibernate.core.dao;
+package com.demo.hibernate.core.person.dao;
 
-import com.demo.hibernate.core.entity.Person;
+import com.demo.hibernate.core.person.entity.Person;
 
 public interface PersonDao {
 

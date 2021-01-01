@@ -1,4 +1,4 @@
-package com.demo.hibernate.core.utils;
+package com.demo.hibernate.core.common;
 
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +15,6 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class HibernateCoreUtils {
 
-
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
@@ -29,14 +28,14 @@ public class HibernateCoreUtils {
     public DataSource dataSource() {
         return DataSourceBuilder.create()
                 .driverClassName("com.mysql.cj.jdbc.Driver")
-                .url("jdbc:mysql://localhost:3066/hibernate-jpa-spring")
+                .url("jdbc:mysql://localhost:3306/hibernate-jpa-spring")
                 .username("root")
                 .password("root")
                 .build();
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager(){
+    public PlatformTransactionManager transactionManager() {
         HibernateTransactionManager transactionManager = new HibernateTransactionManager();
         transactionManager.setSessionFactory(sessionFactory().getObject());
         return transactionManager;
@@ -44,12 +43,10 @@ public class HibernateCoreUtils {
 
     private Properties hibernateConfiguration() {
         Properties hibernateConfig = new Properties();
-        hibernateConfig.put("hibernate.dialect","org.hibernate.dialect.MySQL5InnoDBDialect");
-        hibernateConfig.put("hibernate.hbm2ddl.auto","create");
-        hibernateConfig.put("hibernate.show_sql","true");
-        hibernateConfig.put("hibernate.format_sql","true");
+        hibernateConfig.put("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
+        hibernateConfig.put("hibernate.hbm2ddl.auto", "create");
+        hibernateConfig.put("hibernate.show_sql", "true");
+        hibernateConfig.put("hibernate.format_sql", "true");
         return hibernateConfig;
     }
-
-
 }

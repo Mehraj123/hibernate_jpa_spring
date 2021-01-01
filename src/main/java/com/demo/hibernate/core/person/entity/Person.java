@@ -1,4 +1,4 @@
-package com.demo.hibernate.core.entity;
+package com.demo.hibernate.core.person.entity;
 
 import lombok.Data;
 
