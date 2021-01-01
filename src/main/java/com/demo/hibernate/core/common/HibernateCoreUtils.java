@@ -44,7 +44,7 @@ public class HibernateCoreUtils {
     private Properties hibernateConfiguration() {
         Properties hibernateConfig = new Properties();
         hibernateConfig.put("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
-        hibernateConfig.put("hibernate.hbm2ddl.auto", "create");
+        hibernateConfig.put("hibernate.hbm2ddl.auto", "update");
         hibernateConfig.put("hibernate.show_sql", "true");
         hibernateConfig.put("hibernate.format_sql", "true");
         return hibernateConfig;

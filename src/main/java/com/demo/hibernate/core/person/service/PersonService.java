@@ -1,6 +1,7 @@
 package com.demo.hibernate.core.person.service;
 
 import com.demo.hibernate.core.person.dao.PersonDao;
+import com.demo.hibernate.core.person.dto.PersonDto;
 import com.demo.hibernate.core.person.entity.Person;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -17,7 +18,6 @@ public class PersonService {
         Person personEntity = convertToPersonEntity(personDto);
         Long personId = personDao.save(personEntity);
         personDto.setId(personId);
-
         return personDto;
     }
 
@@ -33,6 +33,9 @@ public class PersonService {
         return convertToPersonDto(updatedPerson);
     }
 
+    public Long delete(Long personId) {
+        return personDao.delete(personId);
+    }
 
     private Person convertToPersonEntity(PersonDto personDto) {
         Person personEntity = new Person();
@@ -48,4 +51,6 @@ public class PersonService {
         personDto.setLastName(person.getLastName());
         return personDto;
     }
+
+
 }

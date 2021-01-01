@@ -1,7 +1,7 @@
 package com.demo.hibernate.core.person.dao;
 
 import com.demo.hibernate.core.person.entity.Person;
-import com.demo.hibernate.core.person.service.PersonDto;
+import com.demo.hibernate.core.person.dto.PersonDto;
 
 public interface PersonDao {
 
@@ -10,4 +10,6 @@ public interface PersonDao {
     Person findById(Long personId);
 
     Person update(PersonDto personDto);
+
+    Long delete(Long personId);
 }

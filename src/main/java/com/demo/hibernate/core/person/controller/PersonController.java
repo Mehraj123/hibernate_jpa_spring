@@ -1,6 +1,6 @@
 package com.demo.hibernate.core.person.controller;
 
-import com.demo.hibernate.core.person.service.PersonDto;
+import com.demo.hibernate.core.person.dto.PersonDto;
 import com.demo.hibernate.core.person.service.PersonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +23,12 @@ public class PersonController {
     }
 
     @PutMapping
-    public PersonDto update(@RequestBody PersonDto personDto){
-       return personService.update(personDto);
+    public PersonDto update(@RequestBody PersonDto personDto) {
+        return personService.update(personDto);
+    }
+
+    @DeleteMapping("/{personId}")
+    public Long delete(@PathVariable Long personId) {
+       return personService.delete(personId);
     }
 }

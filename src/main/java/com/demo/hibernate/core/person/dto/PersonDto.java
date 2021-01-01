@@ -1,4 +1,4 @@
-package com.demo.hibernate.core.person.service;
+package com.demo.hibernate.core.person.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

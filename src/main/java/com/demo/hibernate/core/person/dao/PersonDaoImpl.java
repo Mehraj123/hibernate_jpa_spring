@@ -2,8 +2,8 @@ package com.demo.hibernate.core.person.dao;
 
 import com.demo.hibernate.core.common.BaseException;
 import com.demo.hibernate.core.common.ErrorCode;
+import com.demo.hibernate.core.person.dto.PersonDto;
 import com.demo.hibernate.core.person.entity.Person;
-import com.demo.hibernate.core.person.service.PersonDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.hibernate.Session;
@@ -55,10 +55,10 @@ public class PersonDaoImpl implements PersonDao {
     @Override
     public Person update(PersonDto personDto) {
         try {
+            Person personById = findById(personDto.getId());
+            Person person = updatePerson(personById, personDto);
             Session session = sessionFactory.getCurrentSession();
             session.beginTransaction();
-            Person personById = session.find(Person.class, personDto.getId());
-            Person person = updatePerson(personById, personDto);
             Person updatedPerson = (Person) session.merge(person);
             session.getTransaction().commit();
             log.info("Updated person with id {} to {}", personDto.getId(), updatedPerson);
@@ -71,22 +71,17 @@ public class PersonDaoImpl implements PersonDao {
         }
     }
 
-    //@Override
-    public Person update1(PersonDto personDto) {
-        try {
-            Person personById = findById(personDto.getId());
-            Person updatedPerson = updatePerson(personById, personDto);
-            Session session = sessionFactory.getCurrentSession();
-          Person p = (Person) session.merge(updatedPerson);
-            log.info("Updated person with id {} to {}", personDto.getId(), updatedPerson);
-            return updatedPerson;
-        } catch (BaseException baseException) {
-            throw baseException;
-        } catch (Exception exception) {
-            log.info("Exception occurred while fetching person by Id {} : {} ", personDto.getId(), exception.getMessage());
-            throw new BaseException(ErrorCode.SERVER_FAILED);
-        }
+    @Override
+    public Long delete(Long personId) {
+        Person person = findById(personId);
+        Session session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        session.delete(person);
+        session.getTransaction().commit();
+        log.info("Person deleted with id {}", personId);
+        return personId;
     }
+
 
     private Person updatePerson(Person person, PersonDto personDto) {
         person.setFirstName(personDto.getFirstName());
