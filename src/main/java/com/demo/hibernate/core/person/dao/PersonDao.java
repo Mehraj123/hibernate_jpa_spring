@@ -5,7 +5,7 @@ import com.demo.hibernate.core.person.dto.PersonDto;
 
 public interface PersonDao {
 
-    Long save(Person person);
+    Person save(Person person);
 
     Person findById(Long personId);
 

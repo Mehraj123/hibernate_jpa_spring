@@ -16,9 +16,8 @@ public class PersonService {
 
     public PersonDto save(PersonDto personDto) {
         Person personEntity = convertToPersonEntity(personDto);
-        Long personId = personDao.save(personEntity);
-        personDto.setId(personId);
-        return personDto;
+        Person person = personDao.save(personEntity);
+        return convertToPersonDto(person);
     }
 
     public PersonDto findById(Long personId) {

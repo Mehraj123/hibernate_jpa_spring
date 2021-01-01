@@ -18,19 +18,25 @@ public class PersonDaoImpl implements PersonDao {
     private final SessionFactory sessionFactory;
 
     @Override
-    public Long save(Person person) {
+    public Person save(Person person) {
         Session session = sessionFactory.getCurrentSession();
-        Long personId;
+        Person savedPerson;
         try {
             session.beginTransaction();
-            personId = (Long) session.save(person);
+            Long personId = (Long) session.save(person);
             session.getTransaction().commit();
+            // Session is first level Cache
+            // So, if we load the entity which is just saved it will not look-up into DB.
+            // Rather, just fetch is from Session because Hibernate saved the entity in Session as well.
+            // But from the same session only, if we open a new session and try to load
+            // if will look-up into DB.
+            savedPerson = session.find(Person.class, personId);
             log.info("person saved {} with id {} ", person, personId);
         } catch (Exception exception) {
             log.info("Exception occurred while saving person {} : {} ", person, exception.getMessage());
             throw new BaseException(ErrorCode.ENTITY_SAVE_FAILED);
         }
-        return personId;
+        return savedPerson;
     }
 
     @Override
