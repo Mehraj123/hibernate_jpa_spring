@@ -1,6 +1,6 @@
 package com.demo.hibernate.core.person.controller;
 
-import com.demo.hibernate.core.person.entity.Person;
+import com.demo.hibernate.core.person.service.PersonDto;
 import com.demo.hibernate.core.person.service.PersonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -10,15 +10,20 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class PersonController {
 
-    private PersonService personService;
+    private final PersonService personService;
 
     @PostMapping
-    public Person save(@RequestBody Person person) {
-        return personService.save(person);
+    public PersonDto save(@RequestBody PersonDto personDto) {
+        return personService.save(personDto);
     }
 
     @GetMapping("/{personId}")
-    public Person findById(@PathVariable Long personId) {
+    public PersonDto findById(@PathVariable Long personId) {
         return personService.findById(personId);
+    }
+
+    @PutMapping
+    public PersonDto update(@RequestBody PersonDto personDto){
+       return personService.update(personDto);
     }
 }
