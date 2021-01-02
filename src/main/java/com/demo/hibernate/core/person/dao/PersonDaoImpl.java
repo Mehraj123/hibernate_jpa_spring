@@ -87,9 +87,7 @@ public class PersonDaoImpl implements PersonDao {
             log.info("Exception occurred while deleting person by Id {} : {} ", personId, exception.getMessage());
             throw new BaseException(ErrorCode.SERVER_FAILED);
         }
-
     }
-
 
     private Person updatePerson(Person person, PersonDto personDto) {
         person.setFirstName(personDto.getFirstName());
